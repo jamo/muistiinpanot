@@ -1,0 +1,276 @@
+Käjä
+* Luento 3
+** Prosessi
+*** Koostuu ohjelmakoodista ja datasta koodin suoritukseen liittyen
+*** PCB
+    - identifier
+    - tila
+    - prioriteetti
+    - PC
+    - muisti pointterit    
+    - contekstillinen data
+    - I/O status
+    - accounting Information
+*** Trace
+    Kertoo, missä muistiosoitteissa prosessi on komentoja suorittanut
+
+
+
+
+*** Tila Mallit
+**** Kaksitilainen prosessimalli
+    - running
+    - not running
+
+
+
+
+
+**** Viisitilainen prosessimalli
+|---------+-----+-------------+----------+------------+---------|
+|         | New | Ready       | Running  | Blocked    | Exit    |
+|---------+-----+-------------+----------+------------+---------|
+| New     |     | Admit       |          |            |         |
+|---------+-----+-------------+----------+------------+---------|
+| Ready   |     |             | Dispatch |            |         |
+|---------+-----+-------------+----------+------------+---------|
+| Running |     | Timeout     |          | Event wait | Release |
+|---------+-----+-------------+----------+------------+---------|
+| Blocked |     | Event occur |          |            |         |
+|---------+-----+-------------+----------+------------+---------|
+| Exit    |     |             |          |            |         |
+|---------+-----+-------------+----------+------------+---------|
+**** Viisitilainen prosessimalli suspend tilalla
+|---------+-----+----------+----------+---------+------------+---------|
+|         | New | Ready    | Running  | Suspend | Blocked    | Exit    |
+|---------+-----+----------+----------+---------+------------+---------|
+| New     |     | Admit    |          |         |            |         |
+|---------+-----+----------+----------+---------+------------+---------|
+| Ready   |     |          | Dispatch |         |            |         |
+|---------+-----+----------+----------+---------+------------+---------|
+| Running |     | Timeout  |          |         | Event wait | Release |
+|---------+-----+----------+----------+---------+------------+---------|
+| Suspend |     | Activate |          |         |            |         |
+|---------+-----+----------+----------+---------+------------+---------|
+| Blocked |     |          |          | Suspend |            |         |
+|---------+-----+----------+----------+---------+------------+---------|
+| Exit    |     |          |          |         |            |         |
+|---------+-----+----------+----------+---------+------------+---------|
+     
+*** Prosessin synty
+    - OS asettaa uniikin IDn
+      - allokoi muistin
+	- initialosoi PCBn
+	  - asettaa tarvitut linkitykset?
+	    - luo ja laajentaa tietorakenteita
+**** Process spawning
+     Kun os luo prosessin toisen prosessin pyynnöstä
+**** Parent process
+     Luonut prosessi
+**** Child process
+     Luotu prosessi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*** Suspended process
+**** Mitä ominaisuuksia
+    - Ei heti valmis suoritukseen
+    - saattaa olla odottamassa tapahtumaa
+    - voi olla tilassa, omasta, isännän tai OS ohjeesta
+    - poistuu tilasta vasta kunnes ^ pyytää sitä
+
+**** Syitä
+     -Swapping
+     - Muu os syy
+     - Interaktiivisen käyttäjän pyynnöstä
+     - Ajastus
+     - Isännän pyynnöstä
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*** I/O taulukot
+    - Pitää kirjaa IO laitteista
+      - Huolehtii, että vain yksi prosessi käpistelee io laitetta
+	- jos io operaatio käynnissä tulee tietää
+	  - IO operaation status
+	  - sijainti päämuistista, joka lähde tai kohde io
+            operaatiolle
+
+
+*** Tiedostotaulut
+    - FS pitää kirjaa tiedostojen olemassaolosta
+    - OS ei tiedä juuri tästä
+**** Tarjoaa tietoa
+     - tiedoston olemassaolo
+     - sijainti toissijaisessa muistissa
+     - nykyinen status
+     - muut atribuutit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*** Prosessitaulu
+    - prosessien hallintaa varten
+    - tieto myös muistista, I/O ja filuista jotenkin
+    - OSsän tulee päästä näihin käsiksi ja ovat siten muistinhallinnan
+      alaisia
+
+
+
+*** Prosessikuvan data
+    - Käyttäjän data
+    - ohjelma
+    - stack
+    - PCB
+*** Prosessin attribuutit
+    - pid
+    - isännän id
+    - käyttäjäid
+    - Käyttäjälle näkyvät rekisterit
+    - kontrolli- ja status rekisterit
+      - PC, tilakoodit, statusinfo
+
+*** Suoritus modet
+**** Usermode
+     Käyttäjätila, ei etuoikeutettuja käskyjä, normi ohjelmat
+**** Kernelmode
+     Myös etuoikeutettuja käskyjä, kernel, enemmän oikkia
+*** Prosessin vaihto
+**** Interrupt - keskeytys
+     Koska: suorituksen ulkoinen käsky
+     Käyttö: reaktio asynkroniseen tapahtumaan
+     - kellolaitekeskeytys, I/O keskeytys, muistivirhe
+**** Trap - poikkeus
+     Koska: liittyy nyt suoritettavaan komentoon
+     Käyttö: Virheiden hallinta
+**** Supervisior call
+     Koska: erityinen pyyntö
+     Käyttö: OS funktion kutsu
+**** Mitä oikeesti tapahtuu
+     1) tallennetaan prosessorin konteksti ?
+     2) päivitetään nyt running-tilassa olevan  prosessin PCB
+     3) siirretään PCB sopivaan jonoon
+     4) valitaan toinen prosessi suoritukseen
+     5) päivitetään valitun PCB
+     6) päivitetään muistinhallinta
+     7) palautetaan nyt suoritukseen menevän konteksti
+*** Suoritustilan vaihto
+**** jos ei keskeytyksia
+     jatkaa lataamaan seuraavan tilan ja lataa seuraavan komennon
+     ko. ohjelmasta 
+**** jos on keskeytys
+     asettaa PCn keskeytyksen käsittelijälle
+     vaihtaa moden kernelmodeksi, jotta voidaan käsitellä
+*** UNIX prosessi
+**** UNIX prosessin tilat
+***** User runnig
+      Suoritetaan user modessa
+***** Kernel Running
+      Suoritetaan kernel modessa
+***** Ready to run, in memory
+      Valmiina suoritettavaksi heti kun kernel niin päättää
+***** Asleep in memory
+      Ei voida suorittaa ennen jotain tapahtumaa
+***** Ready to run, Swapped
+      valmis suoritukseen, mutta on swapatty
+***** Sleeping, Swapped
+      Odottaa tapahtumaa ja on swapatty
+***** Preempted
+      On palaamassa kernel modesta mutta kernel päättää välillä
+      suorittaa toisen prosessin
+***** Created
+      Juuri luotu ja ei vielä valmis suoritukseen
+***** Zombie
+      Prosesia ei enää ole, mutta on jättänyt isännälle jäljen
+
+
+
+
+
+**** prosessin kamat
+***** User level content
+      -Prosessi teksti
+      -Prosessin data
+      -Käyttäjän pino
+      -Jaettu muisti
+***** User level content
+      -PC
+      -Prosessorin status rekisteri
+      -Stack pointer
+      -Yleisiä rekietereitä
+***** User level content
+      -Prosessitaulu esiintymä (entry)
+      -User area
+      -prosessin alue - mapping of vierual and physical addresses
+      -Kernel stack
+**** Unix prosessin luonti
+        1) Allokoitaan tila prosessitauluun
+        2) Asetetaan uniikki ID
+        3) Kopioidaan isännän prosessi-image, ilman jaettua muistia
+        4) Kasvatetaan parentin omistamien filujen counttereita osoittamaan
+           että luotu prosessi omistaa ne myös
+        5) Asetetaan lapsiprosessi Ready to run tilaan 
+        6) Palautta lapsen PIDn
+
+	   
+**** Luonnin jälkeen
+     Valitaan joku seuraavista
+       - Pysytään paren prosessissa
+       - Siirretään contolli lapsiprosessille
+       - Siirretään suoritus toiselle prosessille
