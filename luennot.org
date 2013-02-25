@@ -12,20 +12,11 @@ Käjä
     - I/O status
     - accounting Information
 *** Trace
-    Kertoo, missä muistiosoitteissa prosessi on komentoja suorittanut
-
-
-
-
+    Kertoo, missä muistiosoitteissa prosessi on komentoja suorittanu
 *** Tila Mallit
 **** Kaksitilainen prosessimalli
     - running
     - not running
-
-
-
-
-
 **** Viisitilainen prosessimalli
 |---------+-----+-------------+----------+------------+---------|
 |         | New | Ready       | Running  | Blocked    | Exit    |
@@ -69,22 +60,6 @@ Käjä
      Luonut prosessi
 **** Child process
      Luotu prosessi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 *** Suspended process
 **** Mitä ominaisuuksia
     - Ei heti valmis suoritukseen
@@ -98,22 +73,6 @@ Käjä
      - Interaktiivisen käyttäjän pyynnöstä
      - Ajastus
      - Isännän pyynnöstä
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 *** I/O taulukot
     - Pitää kirjaa IO laitteista
       - Huolehtii, että vain yksi prosessi käpistelee io laitetta
@@ -121,7 +80,6 @@ Käjä
 	  - IO operaation status
 	  - sijainti päämuistista, joka lähde tai kohde io
             operaatiolle
-
 
 *** Tiedostotaulut
     - FS pitää kirjaa tiedostojen olemassaolosta
@@ -131,48 +89,13 @@ Käjä
      - sijainti toissijaisessa muistissa
      - nykyinen status
      - muut atribuutit
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 *** Prosessitaulu
     - prosessien hallintaa varten
     - tieto myös muistista, I/O ja filuista jotenkin
     - OSsän tulee päästä näihin käsiksi ja ovat siten muistinhallinnan
       alaisia
 
-
-
+      
 *** Prosessikuvan data
     - Käyttäjän data
     - ohjelma
@@ -238,11 +161,6 @@ Käjä
       Juuri luotu ja ei vielä valmis suoritukseen
 ***** Zombie
       Prosesia ei enää ole, mutta on jättänyt isännälle jäljen
-
-
-
-
-
 **** prosessin kamat
 ***** User level content
       -Prosessi teksti
@@ -267,10 +185,8 @@ Käjä
            että luotu prosessi omistaa ne myös
         5) Asetetaan lapsiprosessi Ready to run tilaan 
         6) Palautta lapsen PIDn
-
-	   
 **** Luonnin jälkeen
      Valitaan joku seuraavista
        - Pysytään paren prosessissa
        - Siirretään contolli lapsiprosessille
-       - Siirretään suoritus toiselle prosessille
+       - Siirretään suoritus toiselle prosessille	 
