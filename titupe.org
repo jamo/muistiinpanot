@@ -7,16 +7,12 @@
 **** subjektilta tulee kieltää pääsy objektiin, jollei sitä erikseen ole sallittu
 *** Täydellisen välityksen perjaate
 **** vaatii että kaikkien pääsyjen kohdalla tulee tarkistaa että pääsy on todella sallittu
-**** UHKA
 *** avoimen suunnittelun perjaate
 **** turva-arkkitehtuurin ja turvasuunnittelun tulee olla julkinen. Salaisia saisi olla avaimet
-**** UHKA
 *** Oikeuksien erottamisen perjaate 
 **** Systeemin ei pitäisi antaa oikeuksia yhden ehdon perusteella
-**** UHKA
 *** Pienimmän oikeuden perjaate
 **** Subjektille tulee antaa vain ne oikeudet, jotka hän välttämätä tarvitsee tehtävän suorittamiseen
-**** UHKA
 *** Pienimmän yhteisen mekanismin perjaate
 **** resursseihin pääsyä valvovia mekanismeja ei tule jakaa muiden kanssa
 **
@@ -57,10 +53,13 @@
 **** Anonymity
 ***** ei julkaista tietoja, josta yksi voidaan identifioida
 ***** Sekoitus - sekotetaan 
-*** TODO pääsymatriisi
+*** pääsymatriisi
 **** subjekti ja oikeudet
-*** TODO pääsylista
-*** TODO valtakirja
+     Koko ruudukko, mitä saa tehdä
+*** pääsylista
+    Rivi pääsymatriisista
+*** valtakiraja
+    Lueteltu, mihin pääsyoikeus
 ** TODO Krypografiaa
 *** TODO ECB
 *** TODO CBC
@@ -96,3 +95,59 @@
 *** SQL injektio
 ** TODO X.509 varmenne
 * KERTAUS
+** salausmenetelmät
+*** Jonosalaus, nopeeta salataan melkokivasti
+   bitti kerrallaan
+*** Lohkosalaus
+   Pilkotaan avaimen pitusiin lohkoihin
+*** Näissä molemmissa yhteinen salainen avain
+** EBC lohkot salataan erikseen ja lähetetään
+** CBC ennen salausa selväteksilohko xorrataan edellisen salatun lohkon kanssa
+** CFB Salataan edellinen salalohko ja xorrataan selvätekstin kanssa
+** CTR Selvälohkot xorrataan salatulla laskurin arvolla
+** Julkisen avaimen salaus, modulolaskin 
+   Digitaalinen allekirjoits, symmetrisen salauksen avaimen välitys
+   * C = M^e mod n
+   * M = C^d mod n
+   * Moduloa voi pilkkoa - (ab) mod n = (a mod n)*(b mod n) mod n
+** Tiivisteftion ominaisuudet
+   -h(M) nopea laskea
+   -h(M) tulos on kiinteän pituinen
+   -h on alkuvaresistanssi, h(M) = y, ei helppoa laskea M
+   -h on injektio tyyppinen, ei löydy helposti M{1,2}, jolla sama tulos
+   -törmäysresistantti kahdesta ei tuu helposti samaa
+   -moni vanha on algo heikko
+** MAC koodi
+   avain+viesti katonoitu HASSAtty
+
+** TODO avainten pituudet
+   symmetrinen 128-256
+   
+** Pääsynvalvonta
+** Viirus
+*** tsr pysyy aktiivisena
+*** häive piiloutuu
+*** salatu, ohjelmakoodi salattu
+*** ja joku
+** Sisäiset hyökkäykset
+   -varmuuskopioita ei yhden taakse
+   -moni lukee koodin
+   -pääsiäismunat
+   -looginen pommi
+   -arkistointi, raportointi
+   -fyysinen suojaus
+   -seuraa työntekijoitä
+  
+
+** haittaohjelmia
+*** Mato 
+    leviää itsestään ilman verkkoyhteyttä
+    -botnet verkoi
+*** troijjalainen
+    leviää muiden ohjelmien mukana
+    avaa takaportin madolle
+*** rootkit
+    piilottaa olemassaolon kernelmode + usermode
+    muuttaa systeemiftuioita
+
+*** 
