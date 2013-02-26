@@ -190,3 +190,180 @@ Käjä
        - Pysytään paren prosessissa
        - Siirretään contolli lapsiprosessille
        - Siirretään suoritus toiselle prosessille	 
+
+* Luento 4
+** Thread
+*** 2 ominaisuutta
+    -Resurssien omistus
+     Sisältää virtaalisen nimiavaruuden prosessiimagen säilömiseen
+    -ajastus/suoritus
+*** Theadin yleisominaisuuksia
+    "Unit of dispatching"
+     == thread tai lightweight process
+     "unit of resource ownership"
+      ==Prosessi
+
+*** Useampi threadi yhdessä prosessissa
+**** Threadiin kuuluu
+     - Thread Control Block TCB
+     - User Stack
+     - Kernel Stack
+**** Prosessiin kuuluu
+     - PCB
+     - User address space
+     - Threadien tiedot TAI User- ja Kernel Stack
+*** Hyödyt
+    -Nopeempaa tehdä thread kuin prosessi
+    -Nopeempi myös lopettaa thread kuin prosessi
+    -Threadien välillä vaihto nopeempaa
+    -Helpompo kommunikaatio threadien välillä
+*** Mihin käytetään
+    -Foreground ja background työskentelyyn
+    -Asynkroniseen prosessointiin
+    -Suorituksen nopeuttamiseen
+    -Modulaariseen ohjelman struktuuriin
+*** Huomioitavaa
+    -Prosessin suspendaaminen suspendaa myös kaikki threadit
+    -Prosessin lopettaminen lopettaa myös threadit
+
+*** Päätilat
+    -Running
+    -Ready
+    -Blocked
+**** Liittyvät operaatiot
+     -Spawn
+     -Block
+     -Unblock
+     -Finish
+*** Synkronisaatio threadien välillä
+    On tarpeen synkronisoida
+    - Threadeillä on yhteinen osoiteavaruus ja yhteiset resurssit
+*** ULT ja KLT
+**** ULT
+***** Yleiset ominaisuudet
+     -Hallinta by itse ohjelma
+     -Kernel ei tiedä näistä mitään
+     -Max yksi thread samaanaikaan
+***** Hyödyt
+      -Nopea vaihto - ei vaadi kernelin toimia
+      -Ajastus ohjelmakohtaista
+      -Toimii kaililla OSsillä
+***** Haitat
+      - Normalissa OS monet systeemikutsut on blocking
+	- Blokkaa kaikki threadit eikä vaan yhtä
+      - Ei toimi, jos halutaan maksimihyöty
+***** Haittojen kierto
+      -Jacketing, muunnetaan blocking systeemikutsu ei blokkaavaksi
+      -Kirjoitetan ohelma useaksi prosessiksi
+**** KLT
+***** Yleiset ominaisuudet
+      -Kernel hallitsee, ei itse prosessi
+      -Esim windows toimii näin
+***** Hyödyt
+      -Usea thread voi pyöriä samanaikaisesti
+      -Jos yksi blocked niin voidaan ajastaa joku muu toimimaan
+      silloin
+***** Haitat
+      -Vaihto yhtä kidasta kuin prosessin vaihto
+
+
+*** Windows prosessi
+**** Prosessi
+     -Entiteetti, joka vastaa käyttäjän taskia tai ohjelmaa, jolla on
+     omat resurssit
+***** Kentät
+     PID
+     Security descriptor
+     base priority
+     default affinity
+     quota limit
+     execution time
+     I/O counters
+     VM operation counters
+     Exception/debugging ports
+     Exit status
+Services
+     Create process
+     Open process
+     Query process info
+     Set process info
+     Terminate process
+**** Thread
+     -dispatchable unit of work
+***** Kentät
+      Thread id
+      Thread context
+      Dynamic priority
+      Base priority
+      Thread processor affinity
+      Thread execution time
+      Alert status
+      Suspension count
+      Impersonation token
+      Termination port
+      Thread exit status
+Palelut
+      Create
+      open
+      query thread info
+      set thread info
+      Current thread
+      Terminate thread
+      Get context
+      Set context
+      Suspend
+      Resume
+      Alert Thread
+      Test thread alert
+      Register termination port
+
+
+**** Tilakaavio
+
+|------------+--------------------+-------------+---------+------------+---------------+------------|
+|            | Ready              | Standby     | Running | Terminated | Waiting       | Transition |
+|------------+--------------------+-------------+---------+------------+---------------+------------|
+| Ready      |                    | Pick to run |         |            |               |            |
+|------------+--------------------+-------------+---------+------------+---------------+------------|
+| Standby    |                    |             | Switch  |            |               |            |
+|------------+--------------------+-------------+---------+------------+---------------+------------|
+| Running    | Preempted          |             |         | Terminate  | Block/suspend |            |
+|------------+--------------------+-------------+---------+------------+---------------+------------|
+| Terminated |                    |             |         |            |               |            |
+|------------+--------------------+-------------+---------+------------+---------------+------------|
+| Waiting    | Unblock/resume     |             |         |            |               | Unblock    |
+|            | Resource available |             |         |            |               |            |
+|------------+--------------------+-------------+---------+------------+---------------+------------|
+| Transition | Resource availbale |             |         |            |               |            |
+|------------+--------------------+-------------+---------+------------+---------------+------------|
+
+** Affiniteetti
+   Threadit voi toimia millä tahansa prosessorilla
+   
+   -Soft affiniteetti
+     Pyrkii ajamaan samalla prosessorilla
+   - Hard affiniteetti
+     Pakko ajaa samalla prosessorilla
+** LWP
+   identifier
+   prioriteetti
+   signal mask
+   käyttäjä rekisterit(tallennetut)
+   kernel stack
+   resource usage
+   pointer vastaavaan kernel threadiin
+   pointer prosessi struktuuriin
+   
+** Linux thread
+   -Linux ei tunne eroa threadin ja prosessin välillä
+   -ULT on mapped to kernel level prosesseihin
+   -Uus prosessi luodaan kopsaamalla nykysen prosessin attribuutit 
+   -uus voidaan kloonata siten et resourses jaetaan
+   -clone() luo erillisen stackin joka prosessille
+  
+** MAC OSX
+*** Mac OSX Grand Central Dispatch (GCD)
+   pool of available threads
+   suunnitteljat voi tehä kivoja paloja, jotka voidaan rinnakkaistaa
+*** MAC OSX Block
+    -Ei kai kiinnosta ketään
