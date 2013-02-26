@@ -2,16 +2,21 @@
 ** 10 perjaatetta
 *** Taloudellisen mekanismin perjaate
 **** turvamekanismin tulee olla niin yksinkertainen kuin mahdollista
+**** UHKA ohjelmoijat ei ymmärrä
 *** Oletuskiellon perjaate
 **** subjektilta tulee kieltää pääsy objektiin, jollei sitä erikseen ole sallittu
 *** Täydellisen välityksen perjaate
 **** vaatii että kaikkien pääsyjen kohdalla tulee tarkistaa että pääsy on todella sallittu
+**** UHKA
 *** avoimen suunnittelun perjaate
 **** turva-arkkitehtuurin ja turvasuunnittelun tulee olla julkinen. Salaisia saisi olla avaimet
+**** UHKA
 *** Oikeuksien erottamisen perjaate 
 **** Systeemin ei pitäisi antaa oikeuksia yhden ehdon perusteella
+**** UHKA
 *** Pienimmän oikeuden perjaate
 **** Subjektille tulee antaa vain ne oikeudet, jotka hän välttämätä tarvitsee tehtävän suorittamiseen
+**** UHKA
 *** Pienimmän yhteisen mekanismin perjaate
 **** resursseihin pääsyä valvovia mekanismeja ei tule jakaa muiden kanssa
 **
@@ -32,8 +37,9 @@
 *** Roolipohjainen
 **** On rooleja ja rooleille kuuluu oikeuksia
 ** TODO Muita Peruskäsitteitä
-*** Luottamuksellisuus
+*** Luottamuksellisuus - CIA
 **** toteutetaan salauksen, pääsynvalvonnan, todennuksen, valtuutuksen ja fyysisen turvallisuuden avulla
+**** Estet
 *** Eheys
 **** Saavutetaan varmuuskopioilla, tarkastussummilla ja tietoa korjaavilla koodiella
 *** Käytettävyys 
@@ -89,3 +95,4 @@
 *** Click jacking
 *** SQL injektio
 ** TODO X.509 varmenne
+* KERTAUS
