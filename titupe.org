@@ -150,4 +150,4 @@
     piilottaa olemassaolon kernelmode + usermode
     muuttaa systeemiftuioita
 
-*** 
+** TODO PALOMUURIT
