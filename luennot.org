@@ -417,6 +417,18 @@ Palelut
 ** Monitor
    ohjelmointikelen feature, joka mahdollistaa vain yhde käyttävän
    metodia samanaikasesti
+*** Ominaisuuksia
+    -paikallisia muuttujia käpistelee vain yksi monitorin metodit
+    -monitoriin pääsee kutsumalla jotain sen metodia
+    -vain yksi prosessi on kerrallaan monitorissa
+*** sykronisaatio hoidetaan muuttujilla (condition variables)
+*** cwait(c) suspendaa 
+     Aina asettaa kutsujan suspended tilaan ja jonoon
+     avaa monitorin mutextin, joku muu pääsee monitoriin
+     kun awakened, odottaa muteksia lukkiutumaan ja jatkamaan
+*** csignal(c) jatkaa jotain odottavista prosesseista
+     - herättää ekan odottavan prosessin jonosta
+*** Osa signalling featureista ei täällä!
 ** Mailbox
    Voi kommunikoida erilaisilla viesteillä
 ** Spinlock 
@@ -431,3 +443,11 @@ Palelut
 **** The problem
      -huolehdi, että producer ei voi lisätä kamaa täyteen bufferiin,
      ja että consumer ei voi ottaa kamaa tyhjästä bufferista
+
+* Luento 7
+** messages
+*** message passing
+    send(destination, message)
+    receive(source, message)
+** Readers/writers
+*** Katso kalvot
