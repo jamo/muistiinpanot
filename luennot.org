@@ -395,4 +395,39 @@ Palelut
 ** Synkronisaatio
 ** TODO Busy Wait 
 * Luento 6
-** Semafora
+** TODO Semafora
+*** Vain 3 toimintoa
+    1) voidaan initialisoida positiiviseks integeriks
+    2) semWait() pienentää arvoa
+    3) semSignal() kasvattaa arvoa
+**** Seuraukset
+     -Ei voida tietää, blokkaako semafora ennen ko. komentoa
+     -Ei voida tietää, mikä prosessi jatkaa heti
+     uniprosessorisysteemilla, kun 2 prosessii toimii rinnakkain
+     -Ei tarvitse tietää, mikäli joku
+**** Vahva semafora
+     Seisottaa prosessit jonossa
+**** Heikki semafora
+     Ei väliä, ei takaa vapautusjärjestystä
+*** Binäärisemafora
+    semafora, mutta vaan 2 tilaa, 0 ja 1
+** Mutex 
+   Binääärisemafora, mutta sama prosessi lukitsee ja avaa
+
+** Monitor
+   ohjelmointikelen feature, joka mahdollistaa vain yhde käyttävän
+   metodia samanaikasesti
+** Mailbox
+   Voi kommunikoida erilaisilla viesteillä
+** Spinlock 
+   Mutex feature, jolla suoritetaan ikuinen loop, odotettaessa
+   mutexin avautumista
+** Rio ongelmat
+*** Producer Consumer
+**** General situation
+     -yksi tai useampi tuottaja, asettaa sitä bfferiin
+     -on yksi kuluttaja ottamassa kamaa kerrallaan pois
+     -vain yksi cons/prod kerralla ottamassa kamaa ulos
+**** The problem
+     -huolehdi, että producer ei voi lisätä kamaa täyteen bufferiin,
+     ja että consumer ei voi ottaa kamaa tyhjästä bufferista
