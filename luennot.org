@@ -367,3 +367,32 @@ Palelut
    suunnitteljat voi tehä kivoja paloja, jotka voidaan rinnakkaistaa
 *** MAC OSX Block
     -Ei kai kiinnosta ketään
+
+* TODO Luento 5
+** Termejä
+   -Atominen operaatio
+   -Kriittinen vaihe - critical section
+     Alue, jossa useampi prosessi samanaikaisesti rikkoo jotain
+   -Deadlock - lukkiutuminen
+     tilanne kun N prosessi ei voi jatkaa kin no odottavat toisiaan
+   -Livelock - elolukko
+     Prosessien tilat vaihtivat toistensa takia, eivät tee mitään
+   järkevää
+   -poissulkemisongelma - mutex
+   -race condition, käpistellään yhteistä asiaa, ja tulos riippuu
+     prosessien ajotuksista
+   -nälkiintyminen
+    prosessia ei koskaan valita
+** Rinnakkaisuus
+** Race condition
+** Critical section
+** Mutex - mutual exclusion
+*** mutex ratkaisuja
+**** SW
+     vaatii jaettua muistia, joku lukko joka kertoo kuka käyttää
+**** HW
+     Compare&swap  konekäskyt
+** Synkronisaatio
+** TODO Busy Wait 
+* Luento 6
+** Semafora
